@@ -1,43 +1,49 @@
 #ifndef UI_FOLD
 #define UI_FOLD
 
-#include <iostream>
-
 #include <string.h>
 #include <windows.h>
+
+#include <iostream>
+
 #include "models/genres.hpp"
 #include "service.hpp"
 
 using namespace std;
 
-const char* divider_welcome =
+const char *divider_welcome =
     " ===================[ Welcome to Spoty ]===================\n\n";
-const char* divider_start =
+const char *divider_start =
     " ===================[ Spotify Clone ]===================\n\n";
-const char* divider_end =
+const char *divider_end =
     "========================================================\n";
 
-class UI {
-   public:
+class UI
+{
+public:
     // static void table();
     static void welcome();
     static void showGenres(INPUT_DATA &data);
+    static void showMusic(INPUT_DATA &data);
     static void start();
     static void end();
+    static void error();
+    static void clear();
     static void progressBar();
 };
 
 // Function to create welcome menu
-void UI ::welcome() {
+void UI ::welcome()
+{
     cout << divider_welcome;
     cout << "Please enter a pasword:\n";
     cout << "> ";
 }
 
-void optionsTable(char arr[101][101], int n, int max, char header[101]) {
-    //gets the max length of words and then compares it to the title
-    strcpy(arr[n], "Exit");
-    //++n;
+void optionsTable(char arr[101][101], int n, int max, char header[101])
+{
+    // gets the max length of words and then compares it to the title
+    strcpy(arr[n + 1], "Exit");
     char maxWord[101] = "";
     for (int i = 0; i < n; ++i)
     {
@@ -45,14 +51,16 @@ void optionsTable(char arr[101][101], int n, int max, char header[101]) {
             strcpy(maxWord, arr[i]);
     }
     int maxim = strlen(maxWord);
-    if(strlen(header) > maxim)
+    if (strlen(header) > maxim)
         maxim = strlen(header);
     // header
     cout << "+";
-    for (int j = 0; j < maxim + 8; ++j) cout << "-";
+    for (int j = 0; j < maxim + 8; ++j)
+        cout << "-";
     cout << "+\n";
     cout << "| " << header;
-    for (int j = 0; j < maxim + 7 - strlen(header); ++j) cout << " ";
+    for (int j = 0; j < maxim + 7 - strlen(header); ++j)
+        cout << " ";
     cout << "|\n";
 
     // data
@@ -62,18 +70,19 @@ void optionsTable(char arr[101][101], int n, int max, char header[101]) {
     for (int j = 0; j < maxim + 8; ++j)
         cout << "-";
     cout << "+\n";
-    cout << "| " << 0 << " |  " << arr[n];
+    cout << "| " << 0 << " |  " << arr[n + 1];
     // outputs the remaining space
-    for (int j = 0; j < maxim + 2 - strlen(arr[n]); ++j)
+    for (int j = 0; j < maxim + 2 - strlen(arr[n + 1]); ++j)
         cout << " ";
     cout << "|\n+";
     // outputs divider
     for (int j = 0; j < maxim + 8; ++j)
         cout << "-";
     //------------------------------------------------------
-    
+
     cout << "+\n";
-    for (int i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i)
+    {
         // outpus options
         cout << "| " << i + 1 << " |  " << arr[i];
         // outputs the remaining space
@@ -85,17 +94,18 @@ void optionsTable(char arr[101][101], int n, int max, char header[101]) {
             cout << "-";
         cout << "+\n";
     }
-   
 }
 
-void UI ::start() {
-    int n = 5;  // the amount of options
-    char options[21][101] = {
-        "Explore genres",  "Create playlist", "Add melody to playlist",
-        "Delete playlist", "Edit playlist"};  // all the options
+void UI ::start()
+{
+    int n = 5; // the amount of options
+    char options[21][101] = {"Explore genres", "Create playlist",
+                             "Add melody to playlist", "Delete playlist",
+                             "View playlist"}; // all the options
     cout << divider_start;
     optionsTable(options, n, 25, (char *)"Options");
-    cout << "\n" << divider_end;
+    cout << "\n"
+         << divider_end;
     cout << "Select an option:\n"
          << "> ";
 
@@ -114,18 +124,31 @@ void UI ::start() {
     // delete all the "audio"/music that comes with it
 }
 
-void UI :: showGenres(INPUT_DATA &data){
+void UI ::showGenres(INPUT_DATA &data)
+{
     cout << divider_end << "\n";
-    optionsTable(data.genre, data.numberOfGenres, 25, (char *)"Genres avalible");
-    cout << "Select an option:\n"
+    optionsTable(data.genre, data.numberOfGenres, 25,
+                 (char *)"Genres avalible");
+    cout << "Select an option to see all music avalible:\n"
          << "> ";
-    
+}
+
+void UI ::showMusic(INPUT_DATA &data)
+{
+    for (int i = 0; i < data.mel; ++i)
+    {
+        cout << data.musicName[i] << "\n";
+        cout << data.artistName[i] << "\n";
+        cout << data.rating[i] << "\n";
+        cout << data.length[i] << "\n";
+    }
 }
 
 void UI ::end() {}
 
 // Function to creating loading bar
-void UI ::progressBar() {
+void UI ::progressBar()
+{
     // 0 - black background,
     // F - Green Foreground
     system("color 0F");
@@ -137,7 +160,8 @@ void UI ::progressBar() {
 
     cout << "[";
     // Print initial loading bar
-    for (int i = 0; i < 26; i++) cout << a;
+    for (int i = 0; i < 26; i++)
+        cout << a;
 
     cout << "]";
     printf("\r");
@@ -145,11 +169,24 @@ void UI ::progressBar() {
     // Print loading bar progress
     // Print "[" again after line reset
     cout << "[";
-    for (int i = 0; i < 26; i++) {
+    for (int i = 0; i < 26; i++)
+    {
         cout << b;
 
         Sleep(100);
     }
+}
+
+void UI ::clear() { system("cls"); }
+
+void UI ::error()
+{
+    char input;
+    cout << divider_end;
+    cout << "An error has occured. Invalid input!\n";
+    cout << "Press b button to go back:\n";
+    cout << "> ";
+    cin >> input;
 }
 
 #endif
