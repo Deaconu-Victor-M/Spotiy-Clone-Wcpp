@@ -60,6 +60,7 @@ void MUSIC ::readMusic(INPUT_DATA &data, int &i)
         read >> data.rating[n];
         read >> data.length[n];
         read >> data.publication[n].day >> data.publication[n].month >> data.publication[n].year;
+        ++n;
     }
 }
 
