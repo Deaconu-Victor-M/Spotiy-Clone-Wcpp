@@ -48,7 +48,8 @@ void MUSIC ::readMusic(INPUT_DATA &data, int &i)
 {
 
     char buffer[101];
-    sprintf(buffer, "data/%s.txt", data.genre[i - 1]);
+    sprintf(buffer, "data/avalible_music/%s.txt", data.genre[i - 1]);
+    cout << buffer << "\n";
     ifstream read(buffer);
     read >> data.mel;
     int n = 0;

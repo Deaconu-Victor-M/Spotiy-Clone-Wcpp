@@ -37,4 +37,15 @@ void isExit(int &input, bool &doThis)
 //     return maxWord;
 // }
 
+string maxWordLength(string input[101], int wordsCount)
+{
+    string maxWord = "";
+    for (int i = 0; i < wordsCount; ++i)
+    {
+        if (strlen(maxWord.c_str()) < strlen(input[i].c_str()))
+            maxWord = input[i];
+    }
+    return maxWord;
+}
+
 #endif
