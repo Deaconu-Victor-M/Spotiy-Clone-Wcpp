@@ -114,7 +114,7 @@ void UI ::musicTable(INPUT_DATA &data)
          << "No."
          << "|";
     cout << "  Name";
-    for(int i = 0; i < (nameLength) + 4 - 6; ++i)
+    for (int i = 0; i < (nameLength) + 4 - 6; ++i)
         cout << " ";
     cout << "|";
     cout << "  Artist";
@@ -144,11 +144,12 @@ void UI ::musicTable(INPUT_DATA &data)
         cout << "|  ";
         cout << data.rating[i] << "    |  " << data.length[i] << "    |  ";
         cout << data.publication[i].day << "." << data.publication[i].month << "." << data.publication[i].year;
-        if(data.publication[i].day < 10 && data.publication[i].month < 10)
+        if (data.publication[i].day < 10 && data.publication[i].month < 10)
             cout << "     |\n";
-        else if((data.publication[i].day < 10 && data.publication[i].month >= 10) || (data.publication[i].day >= 10 && data.publication[i].month < 10))
+        else if ((data.publication[i].day < 10 && data.publication[i].month >= 10) || (data.publication[i].day >= 10 && data.publication[i].month < 10))
             cout << "    |\n";
-        else cout << "   |\n";
+        else
+            cout << "   |\n";
         cout << "+";
         for (int j = 0; j < totalLength; ++j)
             cout << "-";
