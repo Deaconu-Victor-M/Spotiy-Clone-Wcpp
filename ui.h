@@ -30,6 +30,7 @@ public:
     static void error();
     static void clear();
     static void progressBar();
+    static void musicTable(INPUT_DATA &data);
 };
 
 // Function to create welcome menu
@@ -96,6 +97,65 @@ void optionsTable(char arr[101][101], int n, int max, char header[101])
     }
 }
 
+void UI ::musicTable(INPUT_DATA &data)
+{
+    int totalLength = 51;
+    int nameLength = 0;
+    nameLength += maxWordLength(data.musicName, data.musicCount, "Name");
+    totalLength += nameLength;
+    int artistLength = 0;
+    artistLength += maxWordLength(data.artistName, data.musicCount, "Artist");
+    totalLength += artistLength;
+    cout << "+";
+    for (int j = 0; j < totalLength; ++j)
+        cout << "-";
+    cout << "+\n";
+    cout << "|"
+         << "No."
+         << "|";
+    cout << "  Name";
+    for(int i = 0; i < (nameLength) + 4 - 6; ++i)
+        cout << " ";
+    cout << "|";
+    cout << "  Artist";
+    for (int i = 0; i < (artistLength) + 4 - 8; ++i)
+        cout << " ";
+    cout << "|  ";
+    cout << "Rating"
+         << "  |  "
+         << "Length"
+         << "  |  "
+         << "Publication"
+         << "  |\n";
+    cout << "+";
+    for (int j = 0; j < totalLength; ++j)
+        cout << "-";
+    cout << "+\n";
+    for (int i = 0; i < data.musicCount; ++i)
+    {
+        cout << "| " << i + 1 << " |";
+        cout << "  " << data.musicName[i];
+        for (int j = 0; j < (nameLength + 2 - strlen(data.musicName[i])); ++j)
+            cout << " ";
+        cout << "|";
+        cout << "  " << data.artistName[i];
+        for (int j = 0; j < (artistLength + 2 - strlen(data.artistName[i])); ++j)
+            cout << " ";
+        cout << "|  ";
+        cout << data.rating[i] << "    |  " << data.length[i] << "    |  ";
+        cout << data.publication[i].day << "." << data.publication[i].month << "." << data.publication[i].year;
+        if(data.publication[i].day < 10 && data.publication[i].month < 10)
+            cout << "     |\n";
+        else if((data.publication[i].day < 10 && data.publication[i].month >= 10) || (data.publication[i].day >= 10 && data.publication[i].month < 10))
+            cout << "    |\n";
+        else cout << "   |\n";
+        cout << "+";
+        for (int j = 0; j < totalLength; ++j)
+            cout << "-";
+        cout << "+\n";
+    }
+}
+
 void UI ::start()
 {
     int n = 5; // the amount of options
@@ -135,13 +195,15 @@ void UI ::showGenres(INPUT_DATA &data)
 
 void UI ::showMusic(INPUT_DATA &data)
 {
-    for (int i = 0; i < data.mel; ++i)
-    {
-        cout << data.musicName[i] << "\n";
-        cout << data.artistName[i] << "\n";
-        cout << data.rating[i] << "\n";
-        cout << data.length[i] << "\n";
-    }
+    musicTable(data);
+    // for (int i = 0; i < data.musicCount; ++i)
+    // {
+    //     cout << data.musicName[i] << "\n";
+    //     cout << data.artistName[i] << "\n";
+    //     cout << data.rating[i] << "\n";
+    //     cout << data.length[i] << "\n";
+    //     cout << data.publication[i].day  << "."<< data.publication[i].month << "." << data.publication[i].year << "\n";
+    // }
 }
 
 void UI ::end() {}

@@ -48,4 +48,20 @@ string maxWordLength(string input[101], int wordsCount)
     return maxWord;
 }
 
+
+
+int maxWordLength(char arr[101][101], int wordsCount, char header[101])
+{
+    char maxWord[101] = "";
+    for (int i = 0; i < wordsCount; ++i)
+    {
+        if (strlen(maxWord) < strlen(arr[i]))
+            strcpy(maxWord, arr[i]);
+    }
+    int maxim = strlen(maxWord);
+    if (strlen(header) > maxim)
+        maxim = strlen(header);
+    return maxim;
+}
+
 #endif
