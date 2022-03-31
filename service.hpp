@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string.h>
+#include <fstream>
 
 using namespace std;
 
@@ -11,6 +12,8 @@ class SERVICES
 public:
     static void optionInput(int &input);
     static void isExit(int &input, bool &doThis);
+    static void cretePlaylistFile(char name[101]);
+    static void removeFile(char file[101]);
 };
 
 void SERVICES ::optionInput(int &input)
@@ -26,29 +29,23 @@ void isExit(int &input, bool &doThis)
     }
 }
 
-//! return to this function
-// char* maxWordLength(char input[101][101], int wordsCount)
-// {
-//     char maxWord[101] = "";
-//     for(int i = 0; i < wordsCount; ++i){
-//         if(strlen(maxWord) < strlen(input[i]))
-//             strcpy(maxWord, input[i]);
-//     }
-//     return maxWord;
-// }
-
-string maxWordLength(string input[101], int wordsCount)
+void SERVICES ::cretePlaylistFile(char name[101])
 {
-    string maxWord = "";
-    for (int i = 0; i < wordsCount; ++i)
-    {
-        if (strlen(maxWord.c_str()) < strlen(input[i].c_str()))
-            maxWord = input[i];
-    }
-    return maxWord;
+
+    cin >> name;
+    char buffer[101];
+    sprintf(buffer, "data/playlists/%s.txt", name);
+    ofstream mke(buffer, ofstream::out);
 }
 
-
+void SERVICES ::removeFile(char file[101])
+{
+    cout << "Write file name to remove file:\n> ";
+    cin >> file;
+    char buffer[101];
+    sprintf(buffer, "data/playlists/%s.txt", file);
+    remove(buffer);
+}
 
 int maxWordLength(char arr[101][101], int wordsCount, char header[101])
 {

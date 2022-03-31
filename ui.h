@@ -25,12 +25,15 @@ public:
     static void welcome();
     static void showGenres(INPUT_DATA &data);
     static void showMusic(INPUT_DATA &data);
+    static void showPlaylists(INPUT_DATA &data);
     static void start();
     static void end();
     static void error();
     static void clear();
     static void progressBar();
     static void musicTable(INPUT_DATA &data);
+    static void inputPlaylistName();
+    static void succesfullyCreatedName(char name[101], int &ok);
 };
 
 // Function to create welcome menu
@@ -185,6 +188,19 @@ void UI ::start()
     // delete all the "audio"/music that comes with it
 }
 
+void UI ::inputPlaylistName()
+{
+    cout << "Enter playlist name:\n";
+    cout << "> ";
+}
+
+void UI ::succesfullyCreatedName(char name[101], int &ok)
+{
+    cout << divider_end;
+    cout << name << " playlist was created succesfully\nPress 0 to go back:\n> ";
+    cin >> ok;
+}
+
 void UI ::showGenres(INPUT_DATA &data)
 {
     cout << divider_end << "\n";
@@ -205,6 +221,15 @@ void UI ::showMusic(INPUT_DATA &data)
     //     cout << data.length[i] << "\n";
     //     cout << data.publication[i].day  << "."<< data.publication[i].month << "." << data.publication[i].year << "\n";
     // }
+}
+
+void UI ::showPlaylists(INPUT_DATA &data)
+{
+    cout << divider_end << "\n";
+    optionsTable(data.playlists, data.numberOfPlaylists, 25,
+                 (char *)"Your playlists");
+    cout << "Select an option to see songs in your playlist:\n"
+         << "> ";
 }
 
 void UI ::end() {}
