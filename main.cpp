@@ -44,10 +44,22 @@ int main()
                         UI ::clear();
                         MUSIC ::readMusic(data, _case);
                         UI ::showMusic(data);
-                        int n;
-                        cin >> n;
-                        if (n == 0)
+                        int song;
+                        SERVICES ::optionInput(song);
+                        if (song == 0)
                             break;
+                        else if (song > data.musicCount)
+                        {
+                            UI ::clear();
+                            UI ::error();
+                        }
+                        else
+                        {
+                            UI ::clear();
+                            cout << "You chose: " << data.musicName[song - 1] << "\nTo play press 1\nTo go back press 0\n> ";
+                            
+                            SERVICES ::playMusic(data.mp3Name[song - 1]);
+                        }
                     }
                 }
             }

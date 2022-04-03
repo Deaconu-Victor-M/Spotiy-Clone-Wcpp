@@ -22,6 +22,7 @@ struct INPUT_DATA
     char genre[101][101];
     char musicName[101][101];
     char artistName[101][101];
+    char mp3Name[101][101];
     float rating[101];
     float length[101];
     DATA publication[101];
@@ -86,6 +87,7 @@ void MUSIC ::addSongToPlylist(INPUT_DATA &data, char playlistName[101], int &son
     {
         mke << data.musicName[songNumber] << "\n";
         mke << data.artistName[songNumber] << "\n";
+        mke << data.mp3Name[songNumber] << "\n";
         mke << data.rating[songNumber] << "\n";
         mke << data.length[songNumber] << "\n";
         mke << data.publication[songNumber].day << " " << data.publication[songNumber].month << " " << data.publication[songNumber].year << "\n";
@@ -107,6 +109,7 @@ void MUSIC ::clearData(INPUT_DATA &data)
         data.genre[n][0] = '\0';
         data.musicName[n][0] = '\0';
         data.artistName[n][0] = '\0';
+        data.mp3Name[n][0] = '\0';
         data.rating[n] = 0;
         data.length[n] = 0;
         data.publication[n].day = 0;
@@ -132,7 +135,7 @@ void MUSIC ::readMusic(INPUT_DATA &data, int &i)
     ifstream read(buffer);
     clearData(data);
     int n = 0;
-    while (read.getline(data.musicName[n], 101) && read.getline(data.artistName[n], 101) && read >> data.rating[n] && read >> data.length[n] && read >> data.publication[n].day >> data.publication[n].month >> data.publication[n].year)
+    while (read.getline(data.musicName[n], 101) && read.getline(data.artistName[n], 101) && read.getline(data.mp3Name[n], 101) && read >> data.rating[n] && read >> data.length[n] && read >> data.publication[n].day >> data.publication[n].month >> data.publication[n].year)
     {
         read.get();
         ++n;
@@ -147,7 +150,7 @@ void MUSIC ::readMusicFromPlaylist(INPUT_DATA &data, int &i)
     ifstream read(buffer);
     clearData(data);
     int n = 0;
-    while (read.getline(data.musicName[n], 101) && read.getline(data.artistName[n], 101) && read >> data.rating[n] && read >> data.length[n] && read >> data.publication[n].day >> data.publication[n].month >> data.publication[n].year)
+    while (read.getline(data.musicName[n], 101) && read.getline(data.artistName[n], 101) && read.getline(data.mp3Name[n], 101) && read >> data.rating[n] && read >> data.length[n] && read >> data.publication[n].day >> data.publication[n].month >> data.publication[n].year)
     {
         read.get();
         ++n;

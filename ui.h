@@ -104,10 +104,10 @@ void UI ::musicTable(INPUT_DATA &data)
 {
     int totalLength = 51;
     int nameLength = 0;
-    nameLength += maxWordLength(data.musicName, data.musicCount, "Name");
+    nameLength += maxWordLength(data.musicName, data.musicCount, (char *)"Name");
     totalLength += nameLength;
     int artistLength = 0;
-    artistLength += maxWordLength(data.artistName, data.musicCount, "Artist");
+    artistLength += maxWordLength(data.artistName, data.musicCount, (char *)"Artist");
     totalLength += artistLength;
     cout << "+";
     for (int j = 0; j < totalLength; ++j)
@@ -197,7 +197,7 @@ void UI ::inputPlaylistName()
 void UI ::succesfullyCreatedName(char name[101], int &ok)
 {
     cout << divider_end;
-    cout << name << " playlist was created succesfully\nPress 0 to go back:\n> ";
+    cout << name << " playlist was created successfully\nPress 0 to go back:\n> ";
     cin >> ok;
 }
 
