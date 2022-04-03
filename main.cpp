@@ -97,7 +97,7 @@ int main()
                 }
                 if (_case == 0)
                     ok = 0;
-                else if (_case < data.numberOfGenres)
+                else if (_case <= data.numberOfGenres)
                 {
                     bool show = true;
                     char name[101];
