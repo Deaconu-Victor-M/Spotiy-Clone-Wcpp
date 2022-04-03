@@ -45,6 +45,7 @@ int main()
                         MUSIC ::readMusic(data, _case);
                         UI ::showMusic(data);
                         int song;
+                        UI ::inputSongToPlay();
                         SERVICES ::optionInput(song);
                         if (song == 0)
                             break;
@@ -57,8 +58,8 @@ int main()
                         {
                             UI ::clear();
                             cout << "You chose: " << data.musicName[song - 1] << "\nTo play press 1\nTo go back press 0\n> ";
-                            
-                            SERVICES ::playMusic(data.mp3Name[song - 1]);
+
+                            SERVICES ::playMusic(data.mp3Name[song - 1], data.length[song - 1]);
                         }
                     }
                 }
@@ -143,10 +144,23 @@ int main()
                     UI ::clear();
                     MUSIC ::readMusicFromPlaylist(data, _case);
                     UI ::showMusic(data);
-                    int n;
-                    cin >> n;
-                    if (n == 0)
+                    int song;
+                    UI ::inputSongToPlay();
+                    SERVICES ::optionInput(song);
+                    if (song == 0)
                         break;
+                    else if (song > data.musicCount)
+                    {
+                        UI ::clear();
+                        UI ::error();
+                    }
+                    else
+                    {
+                        UI ::clear();
+                        cout << "You chose: " << data.musicName[song - 1] << "\nTo play press 1\nTo go back press 0\n> ";
+
+                        SERVICES ::playMusic(data.mp3Name[song - 1], data.length[song - 1]);
+                    }
                 }
             }
         }

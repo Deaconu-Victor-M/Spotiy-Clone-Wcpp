@@ -34,6 +34,7 @@ public:
     static void musicTable(INPUT_DATA &data);
     static void inputPlaylistName();
     static void succesfullyCreatedName(char name[101], int &ok);
+    static void inputSongToPlay();
 };
 
 // Function to create welcome menu
@@ -58,11 +59,11 @@ void optionsTable(char arr[101][101], int n, int max, char header[101])
     if (strlen(header) > maxim)
         maxim = strlen(header);
     // header
-    cout << "+";
+    cout << "\u001b[34m+";
     for (int j = 0; j < maxim + 8; ++j)
         cout << "-";
     cout << "+\n";
-    cout << "| " << header;
+    cout << "| " << header << "";
     for (int j = 0; j < maxim + 7 - strlen(header); ++j)
         cout << " ";
     cout << "|\n";
@@ -73,8 +74,9 @@ void optionsTable(char arr[101][101], int n, int max, char header[101])
     cout << "+";
     for (int j = 0; j < maxim + 8; ++j)
         cout << "-";
-    cout << "+\n";
-    cout << "| " << 0 << " |  " << arr[n + 1];
+    cout << "+\u001b[m\n";
+    cout << "\u001b[31m| " << 0
+         << " |  " << arr[n + 1];
     // outputs the remaining space
     for (int j = 0; j < maxim + 2 - strlen(arr[n + 1]); ++j)
         cout << " ";
@@ -84,11 +86,11 @@ void optionsTable(char arr[101][101], int n, int max, char header[101])
         cout << "-";
     //------------------------------------------------------
 
-    cout << "+\n";
+    cout << "+\u001b[m\n";
     for (int i = 0; i < n; ++i)
     {
         // outpus options
-        cout << "| " << i + 1 << " |  " << arr[i];
+        cout << "| \u001b[32m" << i + 1 << "\u001b[m |  " << arr[i];
         // outputs the remaining space
         for (int j = 0; j < maxim + 2 - strlen(arr[i]); ++j)
             cout << " ";
@@ -109,18 +111,18 @@ void UI ::musicTable(INPUT_DATA &data)
     int artistLength = 0;
     artistLength += maxWordLength(data.artistName, data.musicCount, (char *)"Artist");
     totalLength += artistLength;
-    cout << "+";
+    cout << "\u001b[34m+";
     for (int j = 0; j < totalLength; ++j)
         cout << "-";
     cout << "+\n";
     cout << "|"
          << "No."
-         << "|";
-    cout << "  Name";
+         << "|  ";
+    cout << "Name";
     for (int i = 0; i < (nameLength) + 4 - 6; ++i)
         cout << " ";
-    cout << "|";
-    cout << "  Artist";
+    cout << "|  ";
+    cout << "Artist";
     for (int i = 0; i < (artistLength) + 4 - 8; ++i)
         cout << " ";
     cout << "|  ";
@@ -133,10 +135,10 @@ void UI ::musicTable(INPUT_DATA &data)
     cout << "+";
     for (int j = 0; j < totalLength; ++j)
         cout << "-";
-    cout << "+\n";
+    cout << "+\u001b[m\n";
     for (int i = 0; i < data.musicCount; ++i)
     {
-        cout << "| " << i + 1 << " |";
+        cout << "| \u001b[32m" << i + 1 << "\u001b[m |";
         cout << "  " << data.musicName[i];
         for (int j = 0; j < (nameLength + 2 - strlen(data.musicName[i])); ++j)
             cout << " ";
@@ -171,7 +173,7 @@ void UI ::start()
     cout << "\n"
          << divider_end;
     cout << "Select an option:\n"
-         << "> ";
+         << "\u001b[31m> \u001b[m";
 
     //! user
     // explore genres
@@ -188,16 +190,21 @@ void UI ::start()
     // delete all the "audio"/music that comes with it
 }
 
+void UI ::inputSongToPlay()
+{
+    cout << "Enter the name of the song you want to play\n\u001b[31m> \u001b[m";
+}
+
 void UI ::inputPlaylistName()
 {
     cout << "Enter playlist name:\n";
-    cout << "> ";
+    cout << "\u001b[31m> \u001b[m";
 }
 
 void UI ::succesfullyCreatedName(char name[101], int &ok)
 {
-    cout << divider_end;
-    cout << name << " playlist was created successfully\nPress 0 to go back:\n> ";
+    cout << "\u001b[32m" << divider_end;
+    cout << name << " playlist was created successfully\u001b[m\nPress 0 to go back:\n> ";
     cin >> ok;
 }
 
@@ -235,34 +242,58 @@ void UI ::showPlaylists(INPUT_DATA &data)
 void UI ::end() {}
 
 // Function to creating loading bar
+// void UI ::progressBar(float &progress)
+// {
+//     int barWidth = 50;
+
+//     cout << "[";
+//     for (int i = 0; i < barWidth; i++)
+//         cout << "-";
+//     cout << "]";
+//     cout << " \r";
+//     int pos = barWidth * progress;
+//     cout << "[";
+//     for (int i = 0; i < barWidth; ++i)
+//     {
+//         if (i < pos)
+//             cout << "=";
+//         else
+//             cout << " ";
+//         Sleep(10);
+//     }
+//     cout << "] " << int(progress) << " %\r";
+//     cout.flush();
+//     Sleep(100);
+// }
+
 void UI ::progressBar()
 {
-    // 0 - black background,
-    // F - Green Foreground
-    system("color 0F");
 
-    // Initialize char for printing
-    // loading bar
+    // float &progress, INPUT_DATA &data
+    //  Initialize char for printing
+    //  loading bar
+    int i = 0;
     char a = '-';
     char b = '=';
+    int barWidth = 100;
 
-    cout << "[";
     // Print initial loading bar
-    for (int i = 0; i < 26; i++)
-        cout << a;
-
-    cout << "]";
-    printf("\r");
-
-    // Print loading bar progress
-    // Print "[" again after line reset
     cout << "[";
-    for (int i = 0; i < 26; i++)
+    for (int i = 0; i < barWidth; i++)
+        cout << a;
+    cout << "]";
+    cout << " \r";
+
+    cout << "[";
+    while (i < barWidth)
     {
         cout << b;
-
-        Sleep(100);
+        Sleep(29.5);
+        ++i;
     }
+    cout << "]\r";
+
+    // << int(progress) << " %\r"
 }
 
 void UI ::clear() { system("cls"); }
@@ -271,9 +302,9 @@ void UI ::error()
 {
     char input;
     cout << divider_end;
-    cout << "An error has occured. Invalid input!\n";
+    cout << "\n\u001b[31mAn error has occured. Invalid input!\u001b[m\n";
     cout << "Press b button to go back:\n";
-    cout << "> ";
+    cout << "\u001b[31m> \u001b[m";
     cin >> input;
 }
 
